@@ -1,0 +1,19 @@
+*, *:before, *:after { margin: 0; padding: 0; box-sizing: inherit; }
+html { scroll-behavior: smooth; background-color: #ECEFF1; }
+body { background: #ECEFF1; font-family: 'Open Sans', sans-serif; margin: 0; opacity: 1; transition: 1s; }
+body.fade-out { opacity: 0; }
+#navbar { overflow: hidden; background-color: #333; z-index: 1; }
+#navbar a { float: left; margin-left: 10px; display: block; color: #f2f2f2; text-align: center; padding: 14px; text-decoration: none; transition: .1s; }
+#navbar a:hover { background-color: #ddd; color: black; }
+/* #navbar a.active { background-color: #4CAF50; color: white; } */ 
+.sticky { position: fixed; top: 0; width: 100%; animation: drop 0.6s; }
+@keyframes drop {
+    0% {
+        transform: translateY(-30%);
+    } 
+    100% {
+        transform: translateY(0%);
+    } 
+}
+.main { position: relative; min-height: 100vh; z-index: 0; }
+.sticky + .main { padding-top: 50px; }

@@ -1,0 +1,63 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>Visual Word Tree</title>        
+  
+    <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans&amp;display=swap" rel="stylesheet">
+    
+    <link href="general.css" rel="stylesheet" type="text/css">
+  
+    <!-- update the version number as needed -->
+    <script defer="" src="/__/firebase/6.2.4/firebase-app.js"></script>
+    <!-- <script defer src="/__/firebase/6.2.4/firebase-auth.js"></script> -->
+    <!-- <script defer src="/__/firebase/6.2.4/firebase-database.js"></script> -->
+    <!-- <script defer src="/__/firebase/6.2.4/firebase-messaging.js"></script> -->
+    <!--<script defer src="/__/firebase/6.2.4/firebase-storage.js"></script> -->
+    <script defer="" src="/__/firebase/init.js"></script>
+  
+    <style>
+        .sticky { animation: drop 0.0s; }
+        #top_search_container { width: 50%; margin: 5em auto 2.5em; }
+        input[type=button] { float: right; width: 5em; border: none; height: 2.225em; font-size: 22pt; }
+        #search_bar { overflow: hidden; padding-right: 4em; }
+        #searcher { width: 100%; font-size: 22pt; padding: .5em; }
+        #search_log { width: 75%; height: 3em; background: yellow; margin: 0 auto 2.5em; padding-left: 10em; }
+        #tree_container { background: green; height: 100vh; margin: auto; }
+        #rootContainer { margin: auto; display: flex; justify-content: center; }
+        .result {
+            width: 50px;
+            height: 50px;
+            background: red;
+            margin: 1em auto;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 5px;
+            opacity: 0;
+            transform: rotateX(-90deg);
+            transition: all 0.5s cubic-bezier(.36,-0.64,.34,1.76);
+        }
+        .animate { opacity: 1; transform: none; transition: all 0.5s cubic-bezier(.36,-0.64,.34,1.76); }
+    </style>
+  </head>
+  <body>
+    <script>document.body.className += ' fade-out';</script>
+    <div id="navbar" class="sticky">
+        <a href="index.html">Portfolio</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#contact_info">Contact Info</a>
+    </div>
+    <div class="main">
+        <div id="top_search_container">
+            <input id="submit" type="button" onclick="tree.finishWord()" value="Submit">
+            <div id="search_bar">
+                <input id="searcher" type="text" name="search" oninput="examine(this.value)" placeholder="Type a word, any word..."><br>
+            </div>
+        </div>
+        <div id="search_log"></div>
+        <div id="tree_container">
+        </div>
+    </div>
+    <script type="text/javascript" src="scripts.js"></script>
+    <script type="text/javascript" src="treeNode.js"></script>
+  </body></html>
