@@ -221,7 +221,11 @@ let tree = new WordTree;
 
 //Listening to typing here.
 function examine(val) {
-  if (tempWord.length >= val.length) return tree.removeLetter();
+  if (tempWord.length >= val.length) {
+    tree.removeLetter();
+    //need to have a reshuffle happen here. Go over what we have built so far, compare it to our visual tree.
+    return;
+  }
   let letter = val.slice(-1);
   tree.addLetter(letter);
   buildVisualTree(letter);
@@ -236,8 +240,51 @@ typingSend.addEventListener("keyup", (event) => {
 
 
 //Here is where the visual portion is built.
+//Need to refactor this so it can accept a full word and build off of that.
+
+function setNewDiv(letter, pos) {
+  console.log(letter, pos);
+  const currentRoot = document.getElementById(tempWord[0].toLowerCase());
+  const newDiv = document.createElement("div");
+  const newDivText = document.createElement("p");
+
+  newDiv.classList.add('result');
+  newDiv.classList.add(letter);
+  newDiv.classList.add(pos);
+  newDiv.classList.add(`root-${tempWord[0].toLowerCase()}`)
+  if (pos === 1) newDiv.classList.add('first');
+
+  newDivText.innerHTML = letter;
+  newDivText.style.padding = "25% 0";
+  newDiv.appendChild(newDivText);
+
+  const divChecker = currentRoot.getElementsByClassName(pos);
+  if (divChecker.length > 0) {
+    console.log(`divChecker`);
+    const lastPos = pos - 1;
+    const lastLetter = tempWord[lastPos];
+    console.log(lastLetter, `meme!`);
+    //const rootChildren = document.querySelectorAll(`#${tempWord[0].toLowerCase()}`)[0];
+    //console.log(rootChildren);
+    const parent = document.getElementsByClassName(`root-${tempWord[0].toLowerCase()}`)
+    for (let child of parent) {
+      if (child.classList.contains(lastPos)) {
+        console.log(`found!`);
+        child.appendChild(newDiv);
+      }
+    }
+  } else {
+    currentRoot.appendChild(newDiv);
+  }
+  setTimeout(() => newDiv.classList.add('animate'), .1);
+}
+
 function buildVisualTree(letter) {
+  const currentPos = tempWord.length - 1;
+  console.log(currentPos);
+
     const div = tree.visualSearch().find(x => x.data === letter);
+    if (div === undefined) console.log(`test`);
 
     const rootCheck = document.getElementById('rootContainer');
     if (!rootCheck) {
@@ -294,5 +341,11 @@ function buildVisualTree(letter) {
       if (child.children.length > 0) {
         buildNext(child.children, child.data);
       }
+    }
+    if (div.children.length < 1 && !div.final && tempWord.length > 1) {
+      //here is where we build new data
+      setNewDiv(letter, currentPos);
+      
+      //console.log(`new`);
     }
 }
